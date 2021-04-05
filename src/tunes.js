@@ -28,20 +28,22 @@ export default class Tunes {
   static get tunes() {
     return [
       {
-        name: 'withBorder',
-        icon: borderIcon,
-        title: 'With border',
-      },
-      {
         name: 'stretched',
         icon: stretchedIcon,
         title: 'Stretch image',
       },
-      {
-        name: 'withBackground',
-        icon: bgIcon,
-        title: 'With background',
-      },
+      //
+      // {
+      // name: 'withBorder',
+      // icon: borderIcon,
+      // title: 'With border',
+      // },
+      // {
+      // name: 'withBackground',
+      // icon: bgIcon,
+      // title: 'With background',
+      // },
+      //
     ];
   }
 
@@ -72,7 +74,7 @@ export default class Tunes {
 
     const tunes = Tunes.tunes.concat(this.actions);
 
-    tunes.forEach(tune => {
+    tunes.forEach((tune) => {
       const title = this.api.i18n.t(tune.title);
       const el = make('div', [this.CSS.buttonBase, this.CSS.button], {
         innerHTML: tune.icon,
@@ -111,9 +113,12 @@ export default class Tunes {
       }
     }
 
-    const button = this.buttons.find(el => el.dataset.tune === tuneName);
+    const button = this.buttons.find((el) => el.dataset.tune === tuneName);
 
-    button.classList.toggle(this.CSS.buttonActive, !button.classList.contains(this.CSS.buttonActive));
+    button.classList.toggle(
+      this.CSS.buttonActive,
+      !button.classList.contains(this.CSS.buttonActive)
+    );
 
     this.onChange(tuneName);
   }

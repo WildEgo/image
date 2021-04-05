@@ -118,7 +118,9 @@ export default class ImageTool {
       additionalRequestHeaders: config.additionalRequestHeaders || {},
       field: config.field || 'image',
       types: config.types || 'image/*',
-      captionPlaceholder: this.api.i18n.t(config.captionPlaceholder || 'Caption'),
+      captionPlaceholder: this.api.i18n.t(
+        config.captionPlaceholder || 'Caption'
+      ),
       buttonContent: config.buttonContent || '',
       uploader: config.uploader || undefined,
       actions: config.actions || [],
@@ -301,7 +303,10 @@ export default class ImageTool {
     this.ui.fillCaption(this._data.caption);
 
     Tunes.tunes.forEach(({ name: tune }) => {
-      const value = typeof data[tune] !== 'undefined' ? data[tune] === true || data[tune] === 'true' : false;
+      const value =
+				typeof data[tune] !== 'undefined'
+				  ? data[tune] === true || data[tune] === 'true'
+				  : false;
 
       this.setTune(tune, value);
     });
@@ -328,8 +333,8 @@ export default class ImageTool {
   set image(file) {
     this._data.file = file || {};
 
-    if (file && file.url) {
-      this.ui.fillImage(file.url);
+    if (file && file.original) {
+      this.ui.fillImage(file.original);
     }
   }
 
@@ -342,10 +347,13 @@ export default class ImageTool {
    * @returns {void}
    */
   onUpload(response) {
-    if (response.success && response.file) {
-      this.image = response.file;
+    if (response.message && response.resource) {
+      console.log(response.message);
+      this.image = response.resource;
     } else {
-      this.uploadingFailed('incorrect response: ' + JSON.stringify(response));
+      this.uploadingFailed(
+        'incorrect response: ' + JSON.stringify(response)
+      );
     }
   }
 
@@ -360,7 +368,9 @@ export default class ImageTool {
     console.log('Image Tool: uploading failed because of', errorText);
 
     this.api.notifier.show({
-      message: this.api.i18n.t('Couldn’t upload image. Please try another.'),
+      message: this.api.i18n.t(
+        'Couldn’t upload image. Please try another.'
+      ),
       style: 'error',
     });
     this.ui.hidePreloader();
@@ -395,12 +405,13 @@ export default class ImageTool {
       /**
        * Wait until the API is ready
        */
-      Promise.resolve().then(() => {
-        const blockId = this.api.blocks.getCurrentBlockIndex();
+      Promise.resolve()
+        .then(() => {
+          const blockId = this.api.blocks.getCurrentBlockIndex();
 
-        this.api.blocks.stretchBlock(blockId, value);
-      })
-        .catch(err => {
+          this.api.blocks.stretchBlock(blockId, value);
+        })
+        .catch((err) => {
           console.error(err);
         });
     }

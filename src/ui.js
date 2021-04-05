@@ -68,7 +68,7 @@ export default class Ui {
       imageEl: 'image-tool__image-picture',
       caption: 'image-tool__caption',
     };
-  };
+  }
 
   /**
    * Ui statuses:
@@ -110,7 +110,9 @@ export default class Ui {
   createFileButton() {
     const button = make('div', [ this.CSS.button ]);
 
-    button.innerHTML = this.config.buttonContent || `${buttonIcon} ${this.api.i18n.t('Select an Image')}`;
+    button.innerHTML =
+			this.config.buttonContent ||
+			`${buttonIcon} ${this.api.i18n.t('Select an Image')}`;
 
     button.addEventListener('click', () => {
       this.onSelectFile();
@@ -233,7 +235,10 @@ export default class Ui {
   toggleStatus(status) {
     for (const statusType in Ui.status) {
       if (Object.prototype.hasOwnProperty.call(Ui.status, statusType)) {
-        this.nodes.wrapper.classList.toggle(`${this.CSS.wrapper}--${Ui.status[statusType]}`, status === Ui.status[statusType]);
+        this.nodes.wrapper.classList.toggle(
+          `${this.CSS.wrapper}--${Ui.status[statusType]}`,
+          status === Ui.status[statusType]
+        );
       }
     }
   }
@@ -246,7 +251,10 @@ export default class Ui {
    * @returns {void}
    */
   applyTune(tuneName, status) {
-    this.nodes.wrapper.classList.toggle(`${this.CSS.wrapper}--${tuneName}`, status);
+    this.nodes.wrapper.classList.toggle(
+      `${this.CSS.wrapper}--${tuneName}`,
+      status
+    );
   }
 }
 
